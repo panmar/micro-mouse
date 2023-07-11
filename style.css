@@ -1,0 +1,41 @@
+html,
+body,
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    padding: 10pt;
+}
+
+html {
+    background-color: hsl(212, 16%, 16%);
+    color: #c5c5c5;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#maze {
+    background-color: hsl(226, 11%, 40%);
+    margin: auto;
+    padding: 0;
+	width: 600pt;
+    height: 600pt;
+    outline: 2px solid #000;
+    border: none;
+    font-size: 0;
+}
+
+.cell {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(26, 30, 39);
+    outline: 1px solid #000;
+    border: none;
+	display: inline-block;
+}
