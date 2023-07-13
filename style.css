@@ -1,6 +1,5 @@
 html,
 body,
-p,
 h1 {
     margin: 0;
     padding: 0;
@@ -45,6 +44,22 @@ html {
 	display: inline-block;
 }
 
+.cell-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.debug {
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 .cell-wall {
     background-color: black;
     animation-name: wall-color-transition;
@@ -82,22 +97,24 @@ html {
 }
 
 #mouse {
+    position: absolute;
     margin: 0;
     padding: 0;
     background-color: rgb(141, 139, 143);
     border-radius: 50pt;
-    width: 100%;
-    height: 100%;
+    width: 30pt;
+    height: 30pt;
     transform: scale(0.5, 0.5);
 }
 
 #cheese {
+    position: absolute;
     margin: 0;
     padding: 0;
     background-color: rgb(216, 171, 34);
     border-radius: 50pt;
-    width: 100%;
-    height: 100%;
+    width: 20pt;
+    height: 20pt;
     animation-name: cheese-animation;
     animation-duration: 1s;
     animation-iteration-count: infinite;

@@ -90,7 +90,7 @@ function visualize_path(maze, path, subclass) {
     };
 
     const buildQuery = (n) => {
-        return "#maze :nth-child(" + (n + 1).toString() + ")";
+        return "#maze :nth-child(" + (n + 1).toString() + ") .cell-content";
     };
 
     let timeout = 0;
@@ -115,7 +115,10 @@ function visualize_path(maze, path, subclass) {
                 element.querySelector("#cheese").remove();
             }
 
-            document.querySelector(TOTAL_PATH_LENGTH_INFO).textContent = "Total path lenght: " + (i+1).toString();
+            document.querySelector(TOTAL_PATH_LENGTH_INFO).textContent
+                = "Total path lenght: " + (i+1).toString();
+
+            incrementCellLabelCount(maze, path[i]);
 
         }, timeout);
     }
@@ -148,11 +151,11 @@ function visualize_maze(maze) {
             if (i === 1 && j === 1) {
                 let mouseElement = document.createElement("div");
                 mouseElement.id = "mouse";
-                cellElement.appendChild(mouseElement);
+                cellElement.children[0].appendChild(mouseElement);
             } else if (i === maze.length - 2 && j === maze[0].length - 2) {
                 let cheeseElement = document.createElement("div");
                 cheeseElement.id = "cheese";
-                cellElement.appendChild(cheeseElement);
+                cellElement.children[0].appendChild(cheeseElement);
             }
             mazeElement.appendChild(cellElement);
         }
@@ -164,6 +167,17 @@ function create_maze_cell(width, height, subclass) {
     element.classList.add("cell", subclass);
     element.style.width = width.toString() + "px";
     element.style.height = height.toString() + "px";
+
+    let subelement = document.createElement("div");
+    subelement.classList.add("cell-content");
+    element.appendChild(subelement);
+
+    let debugNumberElement = document.createElement("div");
+    debugNumberElement.className = "debug";
+    debugNumberElement.innerHTML = "<p>0</p>";
+    debugNumberElement.style.visibility = "hidden";
+    subelement.appendChild(debugNumberElement);
+
     return element;
 }
 
@@ -223,6 +237,27 @@ function shuffleArray(array) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
+}
+
+function incrementCellLabelCount(maze, position) {
+    const pointToIndex = (p) => {
+        return p.y * maze.length + p.x;
+    };
+
+    const buildQuery = (n) => {
+        return "#maze :nth-child(" + (n + 1).toString() + ") .cell-content .debug p";
+    };
+
+    const index = pointToIndex(position);
+    const query = buildQuery(index);
+    let element = document.querySelector(query);
+    let counter = element.textContent;
+    if (counter) {
+        element.textContent = (parseInt(counter) + 1).toString();
+    } else {
+        element.textContent = "1";
+    }
+    element.style.visibility = "visible";
 }
 
 document.addEventListener("DOMContentLoaded", app);
