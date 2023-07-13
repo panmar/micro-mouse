@@ -15,8 +15,19 @@
 </head>
 
 <body>
-    <h1>MicroMouse playground</h1>
-    <div id="maze"></div>
+    <div id="app">
+        <h1>MicroMouse playground</h1>
+        <div id="maze"></div>
+        <div id="control-panel">
+            <button id="generate-maze-btn">Generate maze</button>
+            <button id="simulate-btn">Simulate</button>
+        </div>
+        <div id="info-panel">
+            <div class=".info">
+                <p id="total-path-length-info"> Total path lenght: 0</p>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

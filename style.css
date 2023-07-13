@@ -1,5 +1,6 @@
 html,
 body,
+p,
 h1 {
     margin: 0;
     padding: 0;
@@ -8,7 +9,7 @@ h1 {
 h1 {
     text-align: center;
     font-weight: bold;
-    padding: 10pt;
+    padding-bottom: 10pt;
 }
 
 html {
@@ -20,12 +21,17 @@ html {
     padding-bottom: 1em;
 }
 
+#app {
+    width: 100%;
+    height: 100%;
+}
+
 #maze {
-    background-color: hsl(226, 11%, 40%);
+    background-color: black;
     margin: auto;
     padding: 0;
-	width: 600pt;
-    height: 600pt;
+	width: 80%;
+    height: 75vh;
     outline: 2px solid #000;
     border: none;
     font-size: 0;
@@ -34,8 +40,105 @@ html {
 .cell {
     margin: 0;
     padding: 0;
-    background-color: rgb(26, 30, 39);
     outline: 1px solid #000;
     border: none;
 	display: inline-block;
+}
+
+.cell-wall {
+    background-color: black;
+    animation-name: wall-color-transition;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes wall-color-transition {
+    from { background-color: black; }
+    to { background-color: white; }
+}
+
+.cell-empty {
+    background-color: black;
+}
+
+.cell-path {
+    background-color: black;
+    animation-name: path-color-transition;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes path-color-transition {
+    from {
+        background-color: black;
+        transform: scale(1.0, 1.0);
+    }
+    to {
+        background-color: darkslategrey;
+        transform: scale(0.55, 0.55);
+    }
+}
+
+#mouse {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(141, 139, 143);
+    border-radius: 50pt;
+    width: 100%;
+    height: 100%;
+    transform: scale(0.5, 0.5);
+}
+
+#cheese {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(216, 171, 34);
+    border-radius: 50pt;
+    width: 100%;
+    height: 100%;
+    animation-name: cheese-animation;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in;
+}
+
+@keyframes cheese-animation {
+    from {
+        transform: scale(0.25, 0.25);
+    }
+    to {
+        transform: scale(0.35, 0.35);
+    }
+}
+
+#control-panel {
+    margin: auto;
+    padding-top: 10pt;
+    width: 100%;
+    max-width: 80ch;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    margin: 10pt;
+    padding: 7pt;
+    font-size: medium;
+}
+
+#info-panel {
+    margin: auto;
+    padding-top: 10pt;
+    width: 100%;
+    max-width: 80ch;
+    display: flex;
+    justify-content: center;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
 }
