@@ -51,7 +51,17 @@ function generate_maze() {
     const totalCellsCount = width * height;
     const emptyCellsCount = Math.floor(0.3 * totalCellsCount);
     let insertedEmptyCells = 0;
+    const maxTries = 10000;
+    let tries = 0;
     while (insertedEmptyCells < emptyCellsCount) {
+        ++tries;
+
+        // This is a hack, nasty hack; but in practice it works quite well
+        // at least until I implement smarter maze generation algorithm
+        if (tries > maxTries) {
+            return generate_maze();
+        }
+
         let i = Math.floor(Math.random() * width);
         let j = Math.floor(Math.random() * height);
         if (maze[i][j] === 0) {
