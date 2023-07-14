@@ -16,7 +16,7 @@ const app = () => {
             document.querySelectorAll("#maze > .cell").forEach(e => e.remove());
             visualize_maze(maze);
             document.querySelector(GENERATE_MAZE_BTN).disabled = false;
-        }, 10);
+        }, 50);
     };
 
     document.querySelector(SIMULATE_BTN).onclick = () => {
