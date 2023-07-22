@@ -20,7 +20,11 @@ const app = () => {
     };
 
     document.querySelector(SIMULATE_BTN).onclick = () => {
+        if (!maze) {
+            return;
+        }
         solve_maze(maze);
+        document.querySelector(GENERATE_MAZE_BTN).disabled = true;
         document.querySelector(SIMULATE_BTN).disabled = true;
     };
 }
@@ -129,6 +133,11 @@ function visualize_path(maze, path, subclass) {
                 = "Total path lenght: " + (i+1).toString();
 
             incrementCellLabelCount(maze, path[i]);
+
+            if (i === path.length - 1) {
+                document.querySelector(GENERATE_MAZE_BTN).disabled = false;
+                document.querySelector(SIMULATE_BTN).disabled = true;
+            }
 
         }, timeout);
     }
