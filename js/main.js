@@ -7,8 +7,7 @@ const app = () => {
 
     document.querySelector(GENERATE_MAZE_BTN).onclick = () => {
         document.querySelector(GENERATE_MAZE_BTN).disabled = true;
-        document.querySelector(SIMULATE_BTN).disabled = false;
-
+        document.querySelector(SIMULATE_BTN).disabled = true;
         document.querySelector(TOTAL_PATH_LENGTH_INFO).textContent = "Total path lenght: 0";
 
         setTimeout(() => {
@@ -16,6 +15,7 @@ const app = () => {
             document.querySelectorAll("#maze > .cell").forEach(e => e.remove());
             visualize_maze(maze);
             document.querySelector(GENERATE_MAZE_BTN).disabled = false;
+            document.querySelector(SIMULATE_BTN).disabled = false;
         }, 50);
     };
 
@@ -23,9 +23,13 @@ const app = () => {
         if (!maze) {
             return;
         }
-        solve_maze(maze);
+
         document.querySelector(GENERATE_MAZE_BTN).disabled = true;
         document.querySelector(SIMULATE_BTN).disabled = true;
+
+        setTimeout(() => {
+            solve_maze(maze);
+        }, 50);
     };
 
     maze = generate_maze();
@@ -143,12 +147,6 @@ function visualize_path(maze, pathHistory, path) {
                 = "Total path lenght: " + (i + 1).toString();
 
             incrementCellLabelCount(maze, pathHistory[i]);
-
-            if (i === path.length - 1) {
-                document.querySelector(GENERATE_MAZE_BTN).disabled = false;
-                document.querySelector(SIMULATE_BTN).disabled = true;
-            }
-
         }, timeout);
     }
 
@@ -160,6 +158,8 @@ function visualize_path(maze, pathHistory, path) {
             let element = document.querySelector(query);
             element.classList.add("cell-path-shortest")
         }
+
+        document.querySelector(GENERATE_MAZE_BTN).disabled = false;
     }, timeout);
 }
 
