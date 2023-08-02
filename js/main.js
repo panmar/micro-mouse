@@ -27,6 +27,11 @@ const app = () => {
         document.querySelector(GENERATE_MAZE_BTN).disabled = true;
         document.querySelector(SIMULATE_BTN).disabled = true;
     };
+
+    maze = generate_maze();
+    visualize_maze(maze);
+    document.querySelector(GENERATE_MAZE_BTN).disabled = false;
+    document.querySelector(SIMULATE_BTN).disabled = false;
 }
 
 function generate_maze() {
