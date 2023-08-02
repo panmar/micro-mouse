@@ -86,7 +86,7 @@ function generate_maze() {
         maze[i][j] = 0;
         ++insertedEmptyCells;
 
-        if (!dfs(maze, {x: 1, y: 1}, {x: width - 2, y: height - 2}, [], [])) {
+        if (!dfs(maze, { x: 1, y: 1 }, { x: width - 2, y: height - 2 }, [], [], [])) {
             maze[i][j] = 1;
             --insertedEmptyCells;
         }
@@ -96,14 +96,19 @@ function generate_maze() {
 }
 
 function solve_maze(maze) {
-    let path = [];
-    let path_found = dfs(maze, {x: 1, y: 1}, {x: maze.length - 2, y: maze[0].length - 2}, [], path);
+    let pathHistory = [];
+    let path = []
+    let path_found = dfs(maze,
+        { x: 1, y: 1 }, { x: maze.length - 2, y: maze[0].length - 2 },
+        [],
+        pathHistory,
+        path);
     if (path_found) {
-        visualize_path(maze, path, "cell-path");
+        visualize_path(maze, pathHistory, path);
     }
 }
 
-function visualize_path(maze, path, subclass) {
+function visualize_path(maze, pathHistory, path) {
     const pointToIndex = (p) => {
         return p.y * maze.length + p.x;
     };
@@ -113,14 +118,14 @@ function visualize_path(maze, path, subclass) {
     };
 
     let timeout = 0;
-    for (let i = 0; i < path.length; ++i) {
-        const index = pointToIndex(path[i]);
+    for (let i = 0; i < pathHistory.length; ++i) {
+        const index = pointToIndex(pathHistory[i]);
         const query = buildQuery(index);
         let element = document.querySelector(query);
 
-        timeout += 200;
+        timeout += 10;
         setTimeout(() => {
-            element.classList.add(subclass);
+            element.classList.add("cell-path");
             let mouseElement = document.createElement("div");
             mouseElement.id = "mouse";
 
@@ -135,9 +140,9 @@ function visualize_path(maze, path, subclass) {
             }
 
             document.querySelector(TOTAL_PATH_LENGTH_INFO).textContent
-                = "Total path lenght: " + (i+1).toString();
+                = "Total path lenght: " + (i + 1).toString();
 
-            incrementCellLabelCount(maze, path[i]);
+            incrementCellLabelCount(maze, pathHistory[i]);
 
             if (i === path.length - 1) {
                 document.querySelector(GENERATE_MAZE_BTN).disabled = false;
@@ -146,6 +151,16 @@ function visualize_path(maze, path, subclass) {
 
         }, timeout);
     }
+
+    timeout += 200;
+    setTimeout(() => {
+        for (let i = 0; i < path.length; ++i) {
+            const index = pointToIndex(path[i]);
+            const query = buildQuery(index);
+            let element = document.querySelector(query);
+            element.classList.add("cell-path-shortest")
+        }
+    }, timeout);
 }
 
 function visualize_maze(maze) {
@@ -205,9 +220,10 @@ function create_maze_cell(width, height, subclass) {
     return element;
 }
 
-function dfs(maze, current_position, end_position, visited, path) {
+function dfs(maze, current_position, end_position, visited, pathHistory, pathFound) {
     visited.push(current_position);
-    path.push(current_position);
+    pathHistory.push(current_position);
+    pathFound.push(current_position)
 
     if (current_position.x === end_position.x && current_position.y === end_position.y) {
         return true;
@@ -246,10 +262,11 @@ function dfs(maze, current_position, end_position, visited, path) {
     shuffleArray(new_positions);
 
     for (const p of new_positions) {
-        if (dfs(maze, p, end_position, visited, path)) {
+        if (dfs(maze, p, end_position, visited, pathHistory, pathFound)) {
             return true;
         } else {
-            path.push(current_position);
+            pathHistory.push(current_position);
+            pathFound.pop()
         }
     }
 
