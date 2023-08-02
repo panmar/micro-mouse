@@ -123,7 +123,7 @@ function visualize_path(maze, pathHistory, path) {
         const query = buildQuery(index);
         let element = document.querySelector(query);
 
-        timeout += 10;
+        timeout += 175;
         setTimeout(() => {
             element.classList.add("cell-path");
             let mouseElement = document.createElement("div");
