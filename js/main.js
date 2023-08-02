@@ -127,7 +127,7 @@ function visualize_path(maze, pathHistory, path) {
         const query = buildQuery(index);
         let element = document.querySelector(query);
 
-        timeout += 175;
+        timeout += 100;
         setTimeout(() => {
             element.classList.add("cell-path");
             let mouseElement = document.createElement("div");
@@ -150,7 +150,7 @@ function visualize_path(maze, pathHistory, path) {
         }, timeout);
     }
 
-    timeout += 200;
+    timeout += 100;
     setTimeout(() => {
         for (let i = 0; i < path.length; ++i) {
             const index = pointToIndex(path[i]);
